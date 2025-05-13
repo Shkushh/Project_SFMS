@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Submit Feedback</title>
+  <link href="style.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <div class="background-blur"></div>
+  <div class="auth-container fade-in">
+    <h1 class="main-heading">
+      Submit Your <span class="highlight">Feedback</span>
+    </h1>
+
+    <form id="feedbackForm" class="form">
+      <!-- Course/Faculty Dropdown -->
+      <select id="courseSelect" required>
+        <option value="" disabled selected>Select Course / Faculty</option>
+        <option value="math101">Mathematics 101 - Prof. Sharma</option>
+        <option value="cs102">Computer Science 102 - Dr. Patel</option>
+        <option value="phy103">Physics 103 - Ms. Roy</option>
+      </select>
+
+      <!-- Star Rating -->
+      <label class="rating-label">Overall Rating</label>
+      <input type="range" id="rating" min="1" max="5" step="1" />
+      <div id="ratingValue" class="rating-display">Rating: 3</div>
+
+      <!-- Checkboxes -->
+      <label class="rating-label">Aspects you liked</label>
+      <div class="checkbox-group">
+        <label><input type="checkbox" name="aspects" value="clarity" /> Clarity</label>
+        <label><input type="checkbox" name="aspects" value="engagement" /> Engagement</label>
+        <label><input type="checkbox" name="aspects" value="support" /> Faculty Support</label>
+        <label><input type="checkbox" name="aspects" value="materials" /> Study Materials</label>
+      </div>
+
+      <!-- Text Feedback -->
+      <textarea id="feedbackText" rows="4" placeholder="Write your feedback..." required></textarea>
+
+      <!-- Submit Button -->
+      <button type="submit" class="modern-button">Submit Feedback</button>
+    </form>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    $(document).ready(function () {
+      $('#rating').on('input', function () {
+        $('#ratingValue').text('Rating: ' + $(this).val());
+      });
+
+      $('#feedbackForm').on('submit', function (e) {
+        e.preventDefault();
+
+        const course = $('#courseSelect').val();
+        const rating = $('#rating').val();
+        const feedback = $('#feedbackText').val().trim();
+        const aspects = $('input[name="aspects"]:checked').map(function () {
+          return $(this).val();
+        }).get();
+
+        if (!course || feedback === "") {
+          alert("Please fill in all required fields.");
+          return;
+        }
+
+        // Simulate submission
+        alert("Thank you for your feedback!\nCourse: " + course + "\nRating: " + rating + "\nAspects: " + aspects.join(', '));
+        $('#feedbackForm')[0].reset();
+        $('#ratingValue').text('Rating: 3');
+      });
+    });
+  </script>
+</body>
+</html>
+
